@@ -4,7 +4,7 @@ This repository holds all the supporting [Helm](https://helm.sh/) charts and [Ar
 # Repository Layout Explaination
 ```
 ├── charts - Directory for defining charts you want to install through ArgoCD
-│   └── kube-prometheus - Name of Chart
+│   └── aws-pca-issuer - Name of Chart
 │       ├── templates - Directory that holds user created helm templates that should be bundled with the chart install
 │       ├── Chart.yaml - Defines what repo to helm install from, name, and helm chart version
 │       └── values.yaml - Global helm values that you would want set regardless of enviroment
