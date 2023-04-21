@@ -1,0 +1,7 @@
+apiVersion: v2
+kind: Application
+name: infra
+description: A collection of supporting services for bootstrapping new kubernetes clusters
+type: application
+version: 0.0.1
+appVersion: 1.0

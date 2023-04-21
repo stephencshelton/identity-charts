@@ -1,0 +1,32 @@
+{{- if and (.Values.certManager) (.Values.certManager.enabled) -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: {{ .Values.spec.source.repoURL }}
+    path: {{ .Values.spec.source.chartPath }}/cert-manager
+    targetRevision: {{ .Values.spec.source.targetRevision }}
+    helm:
+      valueFiles:
+      - values.yaml
+      values: |
+        cert-manager:
+        {{- toYaml .Values.certManager | nindent 10 }}
+  destination:
+    server: {{ .Values.spec.destination.server }}
+    namespace: cert-manager
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+{{- end -}}
