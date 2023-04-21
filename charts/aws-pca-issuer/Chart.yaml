@@ -1,0 +1,7 @@
+name: aws-pca-issuer
+version: 0.0.1
+apiVersion: v2
+dependencies:
+- name: aws-pca-issuer
+  version: 0.1.2
+  repository: https://cert-manager.github.io/aws-privateca-issuer

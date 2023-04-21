@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: aws-pca-cluster-issuer
+spec:
+  awsPCA:
+    region: {{ .Values.region }}
+    arn: {{ .Values.certificateAuthority }}
+    certificateAuthority:
+      keyAlgorithm: RSA
+      keySize: 2048
+      signatureAlgorithm: SHA256WITHRSA

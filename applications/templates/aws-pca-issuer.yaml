@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cert-manager
+  name: aws-pca-issuer
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "0"
@@ -12,15 +12,18 @@ spec:
   project: default
   source:
     repoURL: {{ .Values.spec.source.repoURL }}
-    path: {{ .Values.spec.source.chartPath }}/cert-manager
+    path: {{ .Values.spec.source.chartPath }}/aws-pca-issuer
     targetRevision: {{ .Values.spec.source.targetRevision }}
     helm:
-      # Sane defaults for cert-manager
+      # Sane defaults for aws-pca-issuer
       valueFiles:
       - values.yaml
       # Dynamic values passed from terraform
       values: |
-        cert-manager:
+        aws-pca-issuer:
+          serviceAccount:
+            annotations:
+              eks.amazonaws.com/role-arn: "arn:aws:iam::{{ .Values.accountId }}:role/{{ .Values.clusterName }}-aws-pca-issuer"
         {{- toYaml .Values | nindent 10 }}
   destination:
     server: {{ .Values.spec.destination.server }}
